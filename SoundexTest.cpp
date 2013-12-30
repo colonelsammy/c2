@@ -1,29 +1,17 @@
-#include "gmock/gmock.h" 
+#include "catch.hpp" 
 
 // START_HIGHLIGHT
 #include "Soundex.h"
 // END_HIGHLIGHT
 
-// START_HIGHLIGHT
-using namespace testing;
-// END_HIGHLIGHT
-
-// START_HIGHLIGHT
-class SoundexEncoding: public Test {
-// END_HIGHLIGHT
-public:
+TEST_CASE("SoundexEncoding") {
    Soundex soundex;
-};
+   SECTION("RetainsSoleLetterOfOneLetterWord") {
+      REQUIRE(soundex.encode("A") == "A000"); 
+   }
 
-TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
-// START_HIGHLIGHT
-   ASSERT_THAT(soundex.encode("A"), Eq("A000")); 
-// END_HIGHLIGHT
-}
-
-TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
-// START_HIGHLIGHT
-   ASSERT_THAT(soundex.encode("I"), Eq("I000"));
-// END_HIGHLIGHT
+   SECTION("PadsWithZerosToEnsureThreeDigits") {
+      REQUIRE(soundex.encode("I") == "I000");
+   }
 }
 
