@@ -1,6 +1,6 @@
-#include "gmock/gmock.h"    //<label id="code.include"/>
+#include "catch.hpp"    //<label id="code.include"/>
 
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) { //<label id="code.test"/>
+TEST_CASE("SoundexEncoding", "RetainsSoleLetterOfOneLetterWord") { //<label id="code.test"/>
    Soundex soundex;   //<label id="code.construct"/>
 }
 
