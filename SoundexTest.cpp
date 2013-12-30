@@ -12,16 +12,16 @@ public:
 // END_HIGHLIGHT
 };
 
-#include "gmock/gmock.h"
+#include "catch.hpp"
 
 // START:test
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
+TEST_CASE("SoundexEncoding", "RetainsSoleLetterOfOneLetterWord") {
    Soundex soundex;
    
    auto encoded = soundex.encode("A");
 
 // START_HIGHLIGHT
-   ASSERT_THAT(encoded, testing::Eq("A")); 
+   REQUIRE(encoded == "A"); 
 // END_HIGHLIGHT
 }
 // END:test
