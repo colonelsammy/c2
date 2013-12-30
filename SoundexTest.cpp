@@ -1,50 +1,43 @@
-#include "gmock/gmock.h" 
+#include "catch.hpp" 
 
 #include "Soundex.h"
 
-using namespace testing;
-
-class SoundexEncoding: public Test {
-public:
+TEST_CASE("SoundexEncoding") {
    Soundex soundex;
-};
+   
+   SECTION("RetainsSoleLetterOfOneLetterWord") {
+      REQUIRE(soundex.encode("A") == "A000"); 
+   }
 
-TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
-   ASSERT_THAT(soundex.encode("A"), Eq("A000")); 
+   SECTION("PadsWithZerosToEnsureThreeDigits") {
+      REQUIRE(soundex.encode("I") == "I000"); 
+   }
+
+   SECTION("ReplacesConsonantsWithAppropriateDigits") {
+      REQUIRE(soundex.encode("Ax") == "A200"); 
+   }
+
+   SECTION("IgnoresNonAlphabetics") {
+       REQUIRE(soundex.encode("A#") == "A000"); 
+   }
+
+   SECTION("ReplacesMultipleConsonantsWithDigits") {
+      REQUIRE(soundex.encode("Acdl") == "A234");
+   }
+
+   SECTION("LimitsLengthToFourCharacters") {
+      REQUIRE(soundex.encode("Dcdlb").length() == 4u); 
+   }
+
+   SECTION("IgnoresVowelLikeLetters") {
+      REQUIRE(soundex.encode("Baeiouhycdl") == "B234");
+   }
+
+   SECTION("CombinesDuplicateEncodings") {
+      REQUIRE(soundex.encodedDigit('b') == soundex.encodedDigit('f'));
+      REQUIRE(soundex.encodedDigit('c') == soundex.encodedDigit('g'));
+      REQUIRE(soundex.encodedDigit('d') == soundex.encodedDigit('t'));
+
+      REQUIRE(soundex.encode("Abfcgdt") == "A123");
+   }
 }
-
-TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
-   ASSERT_THAT(soundex.encode("I"), Eq("I000"));
-}
-
-TEST_F(SoundexEncoding, ReplacesConsonantsWithAppropriateDigits) {
-   ASSERT_THAT(soundex.encode("Ax"), Eq("A200"));
-}
-
-TEST_F(SoundexEncoding, IgnoresNonAlphabetics) {
-   ASSERT_THAT(soundex.encode("A#"), Eq("A000"));
-}
-
-TEST_F(SoundexEncoding, ReplacesMultipleConsonantsWithDigits) {
-   ASSERT_THAT(soundex.encode("Acdl"), Eq("A234"));
-}
-
-TEST_F(SoundexEncoding, LimitsLengthToFourCharacters) {
-   ASSERT_THAT(soundex.encode("Dcdlb").length(), Eq(4u)); 
-}
-
-TEST_F(SoundexEncoding, IgnoresVowelLikeLetters) {
-   ASSERT_THAT(soundex.encode("Baeiouhycdl"), Eq("B234"));
-}
-
-// START:CombinesDuplicateEncodings
-TEST_F(SoundexEncoding, CombinesDuplicateEncodings) {
-// START_HIGHLIGHT
-   ASSERT_THAT(soundex.encodedDigit('b'), Eq(soundex.encodedDigit('f')));
-   ASSERT_THAT(soundex.encodedDigit('c'), Eq(soundex.encodedDigit('g')));
-   ASSERT_THAT(soundex.encodedDigit('d'), Eq(soundex.encodedDigit('t')));
-// END_HIGHLIGHT
-
-   ASSERT_THAT(soundex.encode("Abfcgdt"), Eq("A123"));
-}
-// END:CombinesDuplicateEncodings
