@@ -4,9 +4,9 @@ class Soundex {
 // END_HIGHLIGHT
 
 
-#include "gmock/gmock.h"
+#include "catch.hpp"
 
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
+TEST_CASE("SoundexEncoding", "RetainsSoleLetterOfOneLetterWord") {
    Soundex soundex;
 }
 
