@@ -3,7 +3,7 @@ class Soundex {
 };
 // END_HIGHLIGHT
 
-#include "gmock/gmock.h" 
+#include "catch.hpp" 
 
 // START:test
 TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
