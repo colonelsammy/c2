@@ -1,28 +1,30 @@
-#include "gmock/gmock.h"
+#include "catch.hpp"
 
 #include "StringUtil.h"
 
-using namespace std;
-using namespace testing;
 using namespace stringutil;
 
-TEST(AString, AnswersHeadAsItsFirstLetter) {
-   ASSERT_THAT(head("xyz"), Eq("x"));
+TEST_CASE("String head tests") {
+   SECTION("AnswersHeadAsItsFirstLetter") {
+      REQUIRE(head("xyz") == "x");
+   }
+
+   SECTION("AnswersHeadAsEmptyWhenEmpty") {
+      REQUIRE(head("") == "");
+   }
 }
 
-TEST(AString, AnswersHeadAsEmptyWhenEmpty) {
-   ASSERT_THAT(head(""), Eq(""));
-}
+TEST_CASE("String tail tests") {
+   SECTION("AnswersTailAsAllLettersAfterHead") {
+      REQUIRE(tail("xyz") == "yz");
+   }
 
-TEST(AString, AnswersTailAsAllLettersAfterHead) {
-   ASSERT_THAT(tail("xyz"), Eq("yz"));
-}
-
-TEST(AString, AnswersTailAsEmptyWhenEmpty) {
-   ASSERT_THAT(tail(""), Eq(""));
-}
-
-TEST(AString, AnswersTailAsEmptyWhenContainsOnlyOneCharacter) {
-   ASSERT_THAT(tail("X"), Eq(""));
+   SECTION("AnswersTailAsEmptyWhenEmpty") {
+      REQUIRE(tail("") == "");
+   }
+   
+   SECTION("AnswersTailAsEmptyWhenContainsOnlyOneCharacter") {
+      REQUIRE(tail("X") == "");
+   }
 }
 

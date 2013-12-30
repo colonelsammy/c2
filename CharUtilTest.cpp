@@ -1,54 +1,54 @@
-#include "gmock/gmock.h"
+#include "catch.hpp"
 
 #include <string>
 #include "CharUtil.h"
 
-using namespace std;
-using namespace testing;
 using namespace charutil;
 
-TEST(AChar, IsAVowelForSixSpecificLetters) {
-   ASSERT_TRUE(isVowel('A'));
-   ASSERT_TRUE(isVowel('E'));
-   ASSERT_TRUE(isVowel('I'));
-   ASSERT_TRUE(isVowel('O'));
-   ASSERT_TRUE(isVowel('U'));
-   ASSERT_TRUE(isVowel('Y'));
-}
+TEST_CASE("AChar") {
+   SECTION("IsAVowelForSixSpecificLetters") {
+      REQUIRE(isVowel('A'));
+      REQUIRE(isVowel('E'));
+      REQUIRE(isVowel('I'));
+      REQUIRE(isVowel('O'));
+      REQUIRE(isVowel('U'));
+      REQUIRE(isVowel('Y'));
+   }
 
-TEST(AChar, IsAVowelForLowercaseLetters) {
-   ASSERT_TRUE(isVowel('a'));
-   ASSERT_TRUE(isVowel('e'));
-   ASSERT_TRUE(isVowel('i'));
-   ASSERT_TRUE(isVowel('o'));
-   ASSERT_TRUE(isVowel('u'));
-   ASSERT_TRUE(isVowel('y'));
-}
+   SECTION("IsAVowelForLowercaseLetters") {
+      REQUIRE(isVowel('a'));
+      REQUIRE(isVowel('e'));
+      REQUIRE(isVowel('i'));
+      REQUIRE(isVowel('o'));
+      REQUIRE(isVowel('u'));
+      REQUIRE(isVowel('y'));
+   }
 
-TEST(AChar, IsNotAVowelForAnyOtherCharacter) {
-   ASSERT_FALSE(isVowel('b'));
-}
+   SECTION("IsNotAVowelForAnyOtherCharacter") {
+      REQUIRE_FALSE(isVowel('b'));
+   }
 
-TEST(AChar, AnswersAppropriateUpperCaseLetter) {
-   ASSERT_THAT(upper('a'), Eq('A'));
-}
+   SECTION("AnswersAppropriateUpperCaseLetter") {
+      REQUIRE(upper('a') == 'A');
+   }
 
-TEST(AChar, HandlesAlreadyUppercasedLetters) {
-   ASSERT_THAT(upper('B'), Eq('B'));
-}
+   SECTION("HandlesAlreadyUppercasedLetters") {
+      REQUIRE(upper('B') == 'B');
+   }
 
-TEST(AChar, IgnoresNonLettersWhenUppercasing) {
-   ASSERT_THAT(upper('+'), Eq('+'));
-}
+   SECTION("IgnoresNonLettersWhenUppercasing") {
+      REQUIRE(upper('+') == '+');
+   }
 
-TEST(AChar, AnswersAppropriateLowerCaseLetter) {
-   ASSERT_THAT(lower('A'), Eq('a'));
-}
+   SECTION("AnswersAppropriateLowerCaseLetter") {
+      REQUIRE(lower('A') == 'a');
+   }
 
-TEST(AChar, HandlesAlreadyLowercased) {
-   ASSERT_THAT(lower('b'), Eq('b'));
-}
+   SECTION("HandlesAlreadyLowercased") {
+      REQUIRE(lower('b') == 'b');
+   }
 
-TEST(AChar, IgnoresNonLettersWhenLowercasing) {
-   ASSERT_THAT(lower('+'), Eq('+'));
+   SECTION("IgnoresNonLettersWhenLowercasing") {
+      REQUIRE(lower('+') == '+');
+   }
 }
