@@ -15,28 +15,26 @@ public:
 // END:Soundex
 
 
-#include "gmock/gmock.h" 
-
-using ::testing::Eq;
+#include "catch.hpp" 
 
 // START:RetainsSoleLetter
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
+TEST_CASE("SoundexEncoding1", "RetainsSoleLetterOfOneLetterWord") {
    Soundex soundex;
    
    auto encoded = soundex.encode("A");
 
 // START_HIGHLIGHT
-   ASSERT_THAT(encoded, Eq("A000")); 
+   REQUIRE(encoded == "A000"); 
 // END_HIGHLIGHT
 }
 // END:RetainsSoleLetter
 
 // START:PadsWithZeros
-TEST(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
+TEST_CASE("SoundexEncoding2", "PadsWithZerosToEnsureThreeDigits") {
    Soundex soundex;
 
    auto encoded = soundex.encode("I");
 
-   ASSERT_THAT(encoded, Eq("I000"));
+   REQUIRE(encoded == "I000");
 }
 // END:PadsWithZeros
