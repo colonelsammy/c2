@@ -13,16 +13,14 @@ public:
 // END:Soundex
 
 // START:test
-#include "gmock/gmock.h"    
+#include "catch.hpp"    
 
-using ::testing::Eq;
-
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
+TEST_CASE("SoundexEncoding", "RetainsSoleLetterOfOneLetterWord") {
    Soundex soundex;
    
    auto encoded = soundex.encode("A");
 
-   ASSERT_THAT(encoded, Eq("A")); 
+   REQUIRE(encoded == "A"); 
 }
 // END:test
 
