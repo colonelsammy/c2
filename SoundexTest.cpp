@@ -6,7 +6,7 @@ class Soundex {
 #include "catch.hpp" 
 
 // START:test
-TEST(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
+TEST_CASE("SoundexEncoding", "RetainsSoleLetterOfOneLetterWord") {
    Soundex soundex;
    
 // START_HIGHLIGHT
