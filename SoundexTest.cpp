@@ -22,31 +22,25 @@ private:
 // END:Soundex
 
 
-#include "gmock/gmock.h" 
-
-using testing::Eq;
+#include "catch.hpp" 
 
 // START:test
+
 // START_HIGHLIGHT
-class SoundexEncoding: public testing::Test {
-public:
+TEST_CASE("SoundexEncoding", "RetainsSoleLetterOfOneLetterWord") {
+// END_HIGHLIGHT
    Soundex soundex;
-};
-// END_HIGHLIGHT
 
-// START_HIGHLIGHT
-TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
-// END_HIGHLIGHT
-   auto encoded = soundex.encode("A");
+   SECTION("RetainsSoleLetterOfOneLetterWord") {
+      auto encoded = soundex.encode("A");
 
-   ASSERT_THAT(encoded, Eq("A000")); 
-}
+      REQUIRE(encoded == "A000"); 
+   }
 
-// START_HIGHLIGHT
-TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
-// END_HIGHLIGHT
-   auto encoded = soundex.encode("I");
+   SECTION("PadsWithZerosToEnsureThreeDigits") {
+      auto encoded = soundex.encode("I");
 
-   ASSERT_THAT(encoded, Eq("I000"));
+      REQUIRE(encoded == "I000");
+   }
 }
 // END:test
