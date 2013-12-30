@@ -1,40 +1,35 @@
-#include "gmock/gmock.h" 
+#include "catch.hpp" 
 
 #include "Soundex.h"
 
-using namespace testing;
-
-class SoundexEncoding: public Test {
-public:
+TEST_CASE("SoundexEncoding") {
    Soundex soundex;
-};
+   
+   SECTION("RetainsSoleLetterOfOneLetterWord") {
+      REQUIRE(soundex.encode("A") == "A000"); 
+   }
 
-TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
-   ASSERT_THAT(soundex.encode("A"), Eq("A000")); 
-}
+   SECTION("PadsWithZerosToEnsureThreeDigits") {
+      REQUIRE(soundex.encode("I") == "I000"); 
+   }
 
-TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
-   ASSERT_THAT(soundex.encode("I"), Eq("I000"));
-}
+   SECTION("ReplacesConsonantsWithAppropriateDigits") {
+      REQUIRE(soundex.encode("Ax") == "A200"); 
+   }
 
-TEST_F(SoundexEncoding, ReplacesConsonantsWithAppropriateDigits) {
-   ASSERT_THAT(soundex.encode("Ax"), Eq("A200"));
-}
+   SECTION("IgnoresNonAlphabetics") {
+       REQUIRE(soundex.encode("A#") == "A000"); 
+   }
 
-TEST_F(SoundexEncoding, IgnoresNonAlphabetics) {
-   ASSERT_THAT(soundex.encode("A#"), Eq("A000"));
-}
+   SECTION("ReplacesMultipleConsonantsWithDigits") {
+      REQUIRE(soundex.encode("Acdl") == "A234");
+   }
 
-TEST_F(SoundexEncoding, ReplacesMultipleConsonantsWithDigits) {
-   ASSERT_THAT(soundex.encode("Acdl"), Eq("A234"));
-}
+   SECTION("LimitsLengthToFourCharacters") {
+      REQUIRE(soundex.encode("Dcdlb").length() == 4u); 
+   }
 
-TEST_F(SoundexEncoding, LimitsLengthToFourCharacters) {
-   ASSERT_THAT(soundex.encode("Dcdlb").length(), Eq(4u)); 
+   SECTION("IgnoresVowelLikeLetters") {
+      REQUIRE(soundex.encode("Baeiouhycdl") == "B234");
+   }
 }
-
-// START:IgnoresVowelLike
-TEST_F(SoundexEncoding, IgnoresVowelLikeLetters) {
-   ASSERT_THAT(soundex.encode("Baeiouhycdl"), Eq("B234"));
-}
-// END:IgnoresVowelLike
