@@ -1,27 +1,20 @@
-#include "gmock/gmock.h" 
+#include "catch.hpp" 
 
 #include "Soundex.h"
 
-using namespace testing;
-
-class SoundexEncoding: public Test {
-public:
+TEST_CASE("SoundexEncoding") {
    Soundex soundex;
-};
+   
+   SECTION("RetainsSoleLetterOfOneLetterWord") {
+      REQUIRE(soundex.encode("A") == "A000"); 
+   }
 
-TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWord) {
-   ASSERT_THAT(soundex.encode("A"), Eq("A000")); 
-}
+   SECTION("PadsWithZerosToEnsureThreeDigits") {
+      REQUIRE(soundex.encode("I") == "I000"); 
+   }
 
-TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits) {
-   ASSERT_THAT(soundex.encode("I"), Eq("I000"));
+   SECTION("ReplacesConsonantsWithAppropriateDigits") {
+      REQUIRE(soundex.encode("Ax") == "A200"); 
+   }
 }
-
-// START:ReplacesConsonants
-TEST_F(SoundexEncoding, ReplacesConsonantsWithAppropriateDigits) {
-// START_HIGHLIGHT
-   ASSERT_THAT(soundex.encode("Ax"), Eq("A200"));
-// END_HIGHLIGHT
-}
-// END:ReplacesConsonants
 
