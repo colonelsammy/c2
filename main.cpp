@@ -1,7 +1,4 @@
-#include "gmock/gmock.h"
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
 
-int main(int argc, char** argv) {
-   testing::InitGoogleMock(&argc, argv);
-   return RUN_ALL_TESTS();
-}
 
